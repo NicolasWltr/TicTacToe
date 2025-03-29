@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+// import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './injects/theme/theme.service';
 import { GameComponent } from "./game/game.component";
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet,
+    // RouterOutlet,
     GameComponent,
     GameComponent
   ],

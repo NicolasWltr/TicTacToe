@@ -1,0 +1,9 @@
+<div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full p-3 md:p-4 xl:p-6 place-items-center">
+    <div *ngFor="let single of gameState; let i = index"
+    class="size-full flex justify-center items-center field-border"
+    [ngClass]="{ 'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() }">
+        <ng-container *ngIf="isArray(single); then thenBlock; else elseBlock"></ng-container>
+        <ng-template #thenBlock><app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field></ng-template>
+        <ng-template #elseBlock><button (click)="setValue(i)" class="size-full">{{ single }}</button></ng-template>
+    </div>
+</div>

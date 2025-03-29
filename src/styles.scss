@@ -1,1 +1,33 @@
 @use "tailwindcss";
+
+$dark-primary: #FFFCF2;
+$dark-secondary: #CCC5B9;
+$dark-accent: #403D39;
+$dark-backround: #252422;
+$dark-highlight: #ff4800;
+
+$light-primary: #0f0c00;
+$light-secondary: #474033;
+$light-accent: #c5c2be;
+$light-backround: #dddcda;
+$light-highlight: #9000ff;
+
+.dark {
+    --primary: #{$dark-primary};
+    --secondary: #{$dark-secondary};
+    --accent: #{$dark-accent};
+    --background: #{$dark-backround};
+    --highlight: #{$dark-highlight};
+}
+
+.light {
+    --primary: #{$light-primary};
+    --secondary: #{$light-secondary};
+    --accent: #{$light-accent};
+    --background: #{$light-backround};
+    --highlight: #{$light-highlight};
+}
+
+body {
+    background-color: var(--background);
+}

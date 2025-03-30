@@ -1,17 +1,56 @@
 <ng-container *ngIf="!isArray(gameState); then thenBlock; else elseBlock"></ng-container>
 <ng-template #thenBlock>
-    <div class="size-full grid place-items-center">
-        <p>{{ gameState }}</p>
+    <div  class="size-full overflow-hidden text-(--primary)">
+        <div *ngIf="gameState === 'X'" class="size-full overflow-hidden grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                <path d="M20,20 L80,80 M80,20 L20,80" stroke="currentColor" stroke-width="5" fill="none"/>
+            </svg>
+        </div>
+        <div *ngIf="gameState === 'O'" class="size-full overflow-hidden grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                <path d="M50,10 A40,40 0 1,1 49.9,10 Z" stroke="currentColor" stroke-width="5" fill="none"/>
+            </svg>
+        </div>
+        <div *ngIf="gameState === '/'" class="size-full overflow-hidden grid place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                <path d="M20,50 L80,50" stroke="currentColor" stroke-width="5" fill="none"/>
+            </svg>
+        </div>
     </div>
 </ng-template>
 <ng-template #elseBlock>
-    <div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full p-3 md:p-4 xl:p-6 place-items-center">
+    <div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full place-items-center"
+    [ngClass]="{ 
+        'p-0': indexHistory.length === 0,
+        'p-5 sm:p-6 md:p-7 xl:p-9': indexHistory.length === 1,
+        'p-3 lg:p-4': indexHistory.length === 2,
+        'p-2 lg:p-3': indexHistory.length === 3,
+    }">
         <div *ngFor="let single of gameState; let i = index"
         class="size-full flex justify-center items-center field-border overflow-hidden"
         [ngClass]="{ 'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() }">
             <ng-container *ngIf="isArray(single); then thenBlock; else elseBlock"></ng-container>
             <ng-template #thenBlock><app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field></ng-template>
-            <ng-template #elseBlock><button (click)="setValue(i)" class="size-full overflow-hidden">{{ single }}</button></ng-template>
+            <!-- <ng-template #elseBlock><button (click)="setValue(i)" class="size-full overflow-hidden"><p class="text-size font-black">{{ single }}</p></button></ng-template> -->
+            <ng-template #elseBlock>
+                <button (click)="setValue(i)" class="size-full overflow-hidden text-(--primary)">
+                    <div *ngIf="single === 'X'" class="size-full overflow-hidden grid place-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                            <path d="M20,20 L80,80 M80,20 L20,80" stroke="currentColor" stroke-width="5" fill="none"/>
+                        </svg>
+                    </div>
+                    <div *ngIf="single === 'O'" class="size-full overflow-hidden grid place-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                            <path d="M50,10 A40,40 0 1,1 49.9,10 Z" stroke="currentColor" stroke-width="5" fill="none"/>
+                        </svg>
+                    </div>
+                    <div *ngIf="single === '/'" class="size-full overflow-hidden grid place-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                            <path d="M20,50 L80,50" stroke="currentColor" stroke-width="5" fill="none"/>
+                        </svg>
+                    </div>
+                </button>
+            </ng-template>
         </div>
     </div>
 </ng-template>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, QueryList, signal, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Input, QueryList, signal, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameHandlerService } from '../../injects/gameHandler/game-handler.service';
 

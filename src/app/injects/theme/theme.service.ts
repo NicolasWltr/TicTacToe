@@ -13,6 +13,7 @@ export class ThemeService {
     this.listenForChanges();
   }
 
+  //Listen for changes in the system dark mode settings and update the theme if changed
   private listenForChanges() {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
       if (this.darkModeChangedManually) {
@@ -23,6 +24,7 @@ export class ThemeService {
     });
   }
 
+  //Add light or dark to body class list so that the css variables for the color are changed to acording theme
   updateTheme() {
     if (this.prefersDarkMode()) {
       document.body.classList.add('dark');
@@ -33,6 +35,8 @@ export class ThemeService {
     }
   }
 
+  //Methods below not beeing used atm as no UI is implemented yet
+  // => Theme is always set to system default
   toggleDarkMode() {
     this.prefersDarkMode.set(!this.prefersDarkMode);
     this.darkModeChangedManually = true;

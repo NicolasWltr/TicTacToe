@@ -11,14 +11,18 @@ import { GameHandlerService } from '../injects/gameHandler/game-handler.service'
   styleUrl: './game.component.scss'
 })
 export class GameComponent implements AfterViewInit{
+  //Root Field
   @ViewChild('field') field!: FieldComponent;
 
+  //GameState to be passed to field
   gameState: any;
 
   constructor(private gameHandler: GameHandlerService) {
+    //Get the gameState
     this.gameState = this.gameHandler.getGameState();
   }
 
+  //After view is initialized, set the root field in the gameHandler
   ngAfterViewInit(): void {
     this.gameHandler.setRootField(this.field);
   }

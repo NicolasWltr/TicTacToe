@@ -12,7 +12,7 @@ import { GameHandlerService } from '../../injects/gameHandler/game-handler.servi
   styleUrl: './field.component.scss'
 })
 export class FieldComponent implements AfterViewInit{
-  private currentPlayedField = signal(true);
+  private currentPlayedField = signal(false);
   private isClickAble = signal(true);
 
   @Input() gameState: any;
@@ -23,15 +23,21 @@ export class FieldComponent implements AfterViewInit{
 
   constructor(private gameHandler: GameHandlerService) {
   }
-
+  
   ngAfterViewInit(): void {
-    this.gameHandler.setOnGoingFalse();
+    // Set if the field is clickable (only for deepest field => So fields with no child fields)
     this.isClickAble.set(this.fields.length === 0);
+    
+    // Set the currentPlayedField to true if gameHandler currentPlayedField and indexHistory are equal or gameHandler currentPlayedField is empty (which means player can click any field)
+    let currentPlayed = this.gameHandler.getCurrentPlayedField();
+    if (currentPlayed.length === 0) this.currentPlayedField.set(true);
+    else this.currentPlayedField.set(this.gameHandler.arraysEqual(this.indexHistory, currentPlayed));
   }
 
   public getCurrentPlayedField() {
     return this.currentPlayedField;
   }
+
   public setCurrentPlayedField(value: boolean): void {
     this.currentPlayedField.set(value);
   }
@@ -53,10 +59,12 @@ export class FieldComponent implements AfterViewInit{
   }
 
   public setValue(index: number) {
+    // Check if the field is clickable
     if (!this.currentPlayedField()) return;
+
+    // Set the value in the gameHandler gameState
     const copy = [...this.indexHistory];
     copy.push(index);
-    this.gameHandler.changeGameState(copy);
+    this.gameHandler.setValue(copy);
   }
-
 }

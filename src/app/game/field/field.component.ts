@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, QueryList, signal, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, QueryList, signal, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameHandlerService } from '../../injects/gameHandler/game-handler.service';
 
@@ -18,13 +18,16 @@ export class FieldComponent implements AfterViewInit{
   @Input() gameState: any;
   @Input() indexHistory: number[] = [];
   @Input() index: number = 0;
+  @Input() root: boolean = false;
 
   @ViewChildren(FieldComponent) private fields!: QueryList<FieldComponent>;
 
-  constructor(private gameHandler: GameHandlerService) {
+  constructor(private gameHandler: GameHandlerService, private self: ElementRef) {
+
   }
   
   ngAfterViewInit(): void {
+    if (this.root) this.gameHandler.setRootField(this);
     // Set if the field is clickable (only for deepest field => So fields with no child fields)
     this.isClickAble.set(this.fields.length === 0);
     

@@ -1,4 +1,11 @@
 <!-- Field component for played tic tac toe -->
-<app-field #field class="size-full" [gameState]="gameState()"></app-field> 
-
+<div *ngIf="menuHandler.getMenuState()() === 'game'" class="size-full bg-(--accent) rounded-4xl">
+    <app-field #field class="size-full" [gameState]="gameState()" [root]="true"></app-field> 
+</div>
+<div *ngIf="menuHandler.getMenuState()() === 'menu'" class="size-full">
+    <app-menu></app-menu>
+</div>
+<div *ngIf="menuHandler.getMenuState()() === 'winner'" class="size-full">
+    <app-winner-screen></app-winner-screen>
+</div>
 <!-- TODO: Add Menu Screen to select game settings -->

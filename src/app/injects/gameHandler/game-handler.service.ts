@@ -1,13 +1,15 @@
-import { Injectable, QueryList, signal } from '@angular/core';
-import { FieldComponent } from '../../components/field/field.component';
+import { Injectable, QueryList, signal, WritableSignal } from '@angular/core';
+import { FieldComponent } from '../../game/field/field.component';
+import { MenuHandlerService } from '../menuHandler/menu-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameHandlerService {
-  private depth = 2;
-  private gameState: any = signal(undefined);
+  private depth = 3;
+  private gameState: WritableSignal<any> = signal(undefined);
   private rootField: FieldComponent | null = null;
+  private onDevice: boolean = true;
   
   private currentPlayedField: number[] = [];
   
@@ -17,11 +19,23 @@ export class GameHandlerService {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
+  private menuHandler: MenuHandlerService | undefined = undefined;
+
   constructor() { 
     this.gameState.set(this.generateGameState(this.depth));
   }
 
-  public getGameState(): any {
+  public setDepth(depth: number) {
+    this.depth = depth;
+  }
+
+  public reloadGame() {
+    this.gameState.set(this.generateGameState(this.depth));
+    this.currentPlayedField = [];
+    this.currentPlayer = 'X';
+  }
+
+  public getGameState(): WritableSignal<any> {
     return this.gameState;
   }
 
@@ -31,6 +45,10 @@ export class GameHandlerService {
 
   public getCurrentPlayedField(): number[] {
     return this.currentPlayedField;
+  }
+
+  public setMenuHandler(menuHandler: MenuHandlerService) {
+    this.menuHandler = menuHandler;
   }
 
   // Generate a multidimensional array with given depth and empty values
@@ -147,6 +165,13 @@ export class GameHandlerService {
       // If something has changed wait 1 second to show the single steps of won or drawn fields
       if (changedSmth) await this.sleep(1000);
     } while (changedSmth);
+
+    // Check if the whole game is won or drawn
+    if (!Array.isArray(this.gameState())) {
+      if (this.gameState() === '/') console.log("Draw");
+      else console.log("Won: " + this.gameState());
+      this.menuHandler!.setMenuState("winner");
+    }
   }
 
   // Rekursive function to check if any field in any depth has a win / draw position

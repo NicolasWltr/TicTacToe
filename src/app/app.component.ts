@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './injects/theme/theme.service';
 import { GameComponent } from "./game/game.component";
 import { HeaderComponent } from './components/header/header.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import { HeaderComponent } from './components/header/header.component';
     // RouterOutlet,
     GameComponent,
     GameComponent,
-    HeaderComponent
+    HeaderComponent,
+    CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -18,7 +20,9 @@ import { HeaderComponent } from './components/header/header.component';
 export class AppComponent {
   title = 'TicTacToe';
 
-  constructor(private theme: ThemeService) {
+  dev = isDevMode;
 
+  constructor(private theme: ThemeService) {
+    console.log(this.dev());
   }
 }

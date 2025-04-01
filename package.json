@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve --open",
     "host": "ng serve --host 0.0.0.0 --open",
+    "startp": "ng serve --open --configuration=production",
+    "hostp": "ng serve --host 0.0.0.0 --open --configuration=production",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

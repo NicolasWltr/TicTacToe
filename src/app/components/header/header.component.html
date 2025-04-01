@@ -1,8 +1,11 @@
-<div class="flex flex-row size-full justify-around items-center bg-(--accent)">   
-    <button (click)="setMenu('menu')">Menu</button>
-    <button (click)="setMenu('game')">Game</button>
-    <button (click)="setMenu('winner')">Winner</button>
-    <button (click)="setDepth(1)">Depth 1</button>
-    <button (click)="setDepth(2)">Depth 2</button>
-    <button (click)="setDepth(3)">Depth 3</button>
+<div class="size-full bg-(--accent)">   
+    <div class="relative flex flex-row size-full justify-center items-center w-[80%] mx-auto text-(--primary) text-5xl font-bold">
+        <button (click)="setMenu('menu')" class="absolute left-0 text-(--primary) text-lg font-bold bg-transparent border-2 border-(--background) rounded-lg px-10 py-2 cursor-pointer">
+            Menu
+        </button>
+        <div *ngIf="!isOnDevice() && menuState() === 'game'" (click)="toggleShow()" class="cursor-pointer">
+            <h1 *ngIf="!showOnlinePin()" type="password">{{ placeHolder() }}</h1>
+            <h1 *ngIf="showOnlinePin()" type="password">{{ onlinePin() }}</h1>
+        </div>
+    </div>
 </div>

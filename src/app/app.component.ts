@@ -23,6 +23,5 @@ export class AppComponent {
   dev = isDevMode;
 
   constructor(private theme: ThemeService) {
-    console.log(this.dev());
   }
 }

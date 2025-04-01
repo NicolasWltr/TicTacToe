@@ -33,7 +33,7 @@
             <ng-template #thenBlock><app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field></ng-template>
             <!-- <ng-template #elseBlock><button (click)="setValue(i)" class="size-full overflow-hidden"><p class="text-size font-black">{{ single }}</p></button></ng-template> -->
             <ng-template #elseBlock>
-                <button (click)="setValue(i)" class="size-full overflow-hidden text-(--primary)">
+                <button (click)="setValue(i)" class="size-full overflow-hidden text-(--primary) cursor-pointer">
                     <div *ngIf="single === 'X'" class="size-full overflow-hidden grid place-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
                             <path d="M20,20 L80,80 M80,20 L20,80" stroke="currentColor" stroke-width="10" fill="none"/>

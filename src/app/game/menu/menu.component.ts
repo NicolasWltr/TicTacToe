@@ -29,5 +29,6 @@ export class MenuComponent {
     this.menuHandler.setDepth(this.depth);
     this.menuHandler.setOnDevice(this.onDevice());
     this.menuHandler.setMenuState("game");
+    console.log(this.depth, this.onDevice());
   }
 }

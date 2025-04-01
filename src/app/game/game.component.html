@@ -1,7 +1,6 @@
-<!-- Field component for played tic tac toe -->
 <div class="size-full grid place-items-center">
 
-    <div class="h-full max-w-[calc(100vmin-7rem)] max-h-[calc(100vmin-7rem)] aspect-square my-auto" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'game'}">
+    <div class="h-full max-w-[calc(100vmin-7rem)] max-h-[calc(100vmin-7rem)] sm:max-w-[calc(100vmin-1rem)] sm:max-h-[calc(100vmin-12rem)] md:max-w-[calc(100vmin-(11rem))] md:max-h-[calc(100vmin-11rem)] aspect-square my-auto" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'game'}">
         <div class="size-full bg-(--accent) rounded-4xl">
             <app-field #field class="size-full" [gameState]="gameState()" [root]="true"></app-field> 
         </div>
@@ -13,4 +12,3 @@
         <app-winner-screen></app-winner-screen>
     </div>
 </div>
-<!-- TODO: Add Menu Screen to select game settings -->

@@ -6,7 +6,7 @@ import { MenuHandlerService } from '../menuHandler/menu-handler.service';
   providedIn: 'root'
 })
 export class GameHandlerService {
-  private depth = 3;
+  private depth = 2;
   private gameState: WritableSignal<any> = signal(undefined);
   private rootField: FieldComponent | null = null;
   private onDevice: boolean = true;
@@ -14,6 +14,7 @@ export class GameHandlerService {
   private currentPlayedField: number[] = [];
   
   private currentPlayer: string = 'X';
+  private winner: 'X' | 'O' | '/' | null = null;
   
   private sleep = (ms: number): Promise<void> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,6 +42,9 @@ export class GameHandlerService {
 
   public setRootField(field: FieldComponent) {
     this.rootField = field;
+  }
+  public getRootField(): FieldComponent | null {
+    return this.rootField;
   }
 
   public getCurrentPlayedField(): number[] {
@@ -168,8 +172,8 @@ export class GameHandlerService {
 
     // Check if the whole game is won or drawn
     if (!Array.isArray(this.gameState())) {
-      if (this.gameState() === '/') console.log("Draw");
-      else console.log("Won: " + this.gameState());
+      if (this.gameState() === '/') this.winner = '/';
+      else this.winner = this.gameState();
       this.menuHandler!.setMenuState("winner");
     }
   }

@@ -8,7 +8,7 @@ export class MenuHandlerService {
   private onDevice: WritableSignal<boolean> = signal(true);
   private depth: WritableSignal<1 | 2 | 3> = signal(2);
 
-  private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("game");
+  private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("menu");
 
   constructor(private gameHandler: GameHandlerService) { 
     this.gameHandler.setMenuHandler(this);

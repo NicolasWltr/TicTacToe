@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent implements AfterViewInit{
+export class GameComponent {
   //Root Field
   @ViewChild('field') field!: FieldComponent;
 
@@ -29,11 +29,6 @@ export class GameComponent implements AfterViewInit{
   constructor(private gameHandler: GameHandlerService, public menuHandler: MenuHandlerService) {
     //Get the gameState
     this.gameState = this.gameHandler.getGameState();
-  }
-
-  //After view is initialized, set the root field in the gameHandler
-  ngAfterViewInit(): void {
-    this.gameHandler.setRootField(this.field);
   }
 
   setMenu(state: "menu" | "game" | "winner") {

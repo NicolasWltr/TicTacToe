@@ -1,0 +1,12 @@
+.text-shadow {
+    text-shadow: 0 0 30px var(--highlight);
+}
+
+@media (hover: hover) {
+    .hovereffect:hover, .buttonbackgroundeffect:hover::before {
+        border-color: hsl(from var(--highlight) h 50 l);
+    }
+    .buttonbackgroundeffect:hover::before, .buttonbackgroundeffect:hover::after {
+        background-color: hsl(from var(--highlight) h 50 l);
+    }
+}

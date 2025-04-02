@@ -1,6 +1,7 @@
 import { Injectable, QueryList, signal, WritableSignal } from '@angular/core';
 import { FieldComponent } from '../../game/field/field.component';
 import { MenuHandlerService } from '../menuHandler/menu-handler.service';
+import { OnlineHandlerService } from '../onlineHandler/online-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class GameHandlerService {
   
   private currentPlayedField: number[] = [];
   
+  private myTurn: WritableSignal<boolean> = signal(true);
+  private playerTurn: string = 'X';
+
   private currentPlayer: string = 'X';
   private winner: 'X' | 'O' | '/' | null = null;
   
@@ -21,21 +25,31 @@ export class GameHandlerService {
   };
 
   private menuHandler: MenuHandlerService | undefined = undefined;
+  private onlineHandler: OnlineHandlerService | undefined = undefined;
 
   constructor() { 
     this.gameState.set(this.generateGameState(this.depth));
   }
-
-  public setDepth(depth: number) {
-    this.depth = depth;
-  }
-
+  
   public reloadGame() {
     this.gameState.set(this.generateGameState(this.depth));
     this.currentPlayedField = [];
     this.currentPlayer = 'X';
   }
 
+  public setDepth(depth: number) {
+    this.depth = depth;
+  }
+
+  public setOnDevice(onDevice: boolean) {
+    this.onDevice = onDevice;
+  }
+
+  public async setGameState(gameState: any) {
+    this.gameState.set(gameState);
+    await this.sleep(500);
+    await this.checkWin();
+  }
   public getGameState(): WritableSignal<any> {
     return this.gameState;
   }
@@ -47,12 +61,42 @@ export class GameHandlerService {
     return this.rootField;
   }
 
+  public setCurrentPlayedField(index: number[]) {
+    this.currentPlayedField = index;
+  }
   public getCurrentPlayedField(): number[] {
     return this.currentPlayedField;
   }
 
   public setMenuHandler(menuHandler: MenuHandlerService) {
     this.menuHandler = menuHandler;
+  }
+
+  public setOnlineHandler(onlineHandler: OnlineHandlerService) {
+    this.onlineHandler = onlineHandler;
+  }
+
+  public setMyTurn(turn: boolean) {
+    this.myTurn.set(turn);
+  }
+  public getMyTurn(): WritableSignal<boolean> {
+    return this.myTurn;
+  }
+
+  public setPlayerTurn(turn: string) {
+    this.playerTurn = turn;
+    if (this.playerTurn === this.currentPlayer) this.myTurn.set(true);
+    else this.myTurn.set(false);
+  }
+  public getPlayerTurn(): string {
+    return this.playerTurn;
+  }
+
+  public setCurrentPlayer(player: string) {
+    this.currentPlayer = player;
+  }
+  public getCurrentPlayer(): string {
+    return this.currentPlayer;
   }
 
   // Generate a multidimensional array with given depth and empty values
@@ -72,7 +116,11 @@ export class GameHandlerService {
     this.changeGameState(index, this.currentPlayer);
 
     // Changes the current player to the other player
-    this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+    if (this.onDevice) this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+    else {
+      this.playerTurn = this.playerTurn === 'X' ? 'O' : 'X';
+      this.myTurn.set(this.playerTurn === this.currentPlayer);
+    }
 
     // Get all values of the clicked field except the first to get the next played field
     const [_, ...nextField] = index;
@@ -89,6 +137,10 @@ export class GameHandlerService {
     this.currentPlayedField = nextField;
     // Set the current played field to true so that is can be clicked and is highlighted
     this.setFieldToTrue(nextField);
+
+    if (!this.onDevice) this.onlineHandler?.updateGame();
+
+    await this.checkWin();
   }
 
   public changeGameState(index: number[], value: string) {

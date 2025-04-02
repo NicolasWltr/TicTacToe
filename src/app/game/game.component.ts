@@ -34,8 +34,4 @@ export class GameComponent {
   setMenu(state: "menu" | "game" | "winner") {
     this.menuHandler.setMenuState(state);
   }
-
-  setDepth(depth: 1 | 2 | 3) {
-    this.menuHandler.setDepth(depth);
-  }
 }

@@ -1,8 +1,15 @@
 <div class="size-full bg-(--accent)">   
-    <div class="relative flex flex-row size-full justify-center items-center w-[80%] mx-auto text-(--primary) text-5xl font-bold">
-        <button (click)="setMenu('menu')" class="absolute left-0 text-(--primary) text-lg font-bold bg-transparent border-2 border-(--background) rounded-lg px-10 py-2 cursor-pointer">
+    <div class="relative flex flex-row size-full justify-start items-center w-[80%] mx-auto text-(--primary) text-5xl font-bold">
+        <button (click)="setMenu('menu')" class="text-(--primary) text-lg font-bold bg-transparent border-2 border-(--background) rounded-lg px-10 py-2 cursor-pointer">
             Menu
         </button>
+
+        <div *ngIf="!isOnDevice() && menuState() === 'game'" (click)="toggleShow()" class="cursor-pointer mx-auto">
+            <h1 *ngIf="myTurn()">Your Turn</h1>
+            <h1 *ngIf="!myTurn()">Oponents Turn</h1>
+        </div>
+
+
         <div *ngIf="!isOnDevice() && menuState() === 'game'" (click)="toggleShow()" class="cursor-pointer">
             <h1 *ngIf="!showOnlinePin()" type="password">{{ placeHolder() }}</h1>
             <h1 *ngIf="showOnlinePin()" type="password">{{ onlinePin() }}</h1>

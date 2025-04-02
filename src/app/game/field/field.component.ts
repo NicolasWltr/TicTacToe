@@ -14,6 +14,7 @@ import { GameHandlerService } from '../../injects/gameHandler/game-handler.servi
 export class FieldComponent implements AfterViewInit{
   private currentPlayedField = signal(false);
   private isClickAble = signal(true);
+  private myTurn = signal(true);
 
   @Input() gameState: any;
   @Input() indexHistory: number[] = [];
@@ -32,6 +33,7 @@ export class FieldComponent implements AfterViewInit{
     }
     // Set if the field is clickable (only for deepest field => So fields with no child fields)
     this.isClickAble.set(this.fields.length === 0);
+    this.myTurn = this.gameHandler.getMyTurn();
     
     // Set the currentPlayedField to true if gameHandler currentPlayedField and indexHistory are equal or gameHandler currentPlayedField is empty (which means player can click any field)
     let currentPlayed = this.gameHandler.getCurrentPlayedField();
@@ -63,9 +65,13 @@ export class FieldComponent implements AfterViewInit{
     return history.concat(index);
   }
 
+  public getMyTurn() {
+    return this.myTurn;
+  }
+
   public setValue(index: number) {
     // Check if the field is clickable
-    if (!this.currentPlayedField()) return;
+    if (!this.currentPlayedField() || !this.myTurn()) return;
 
     // Set the value in the gameHandler gameState
     const copy = [...this.indexHistory];

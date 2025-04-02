@@ -22,22 +22,34 @@
                 </div>
             </div>
             <div *ngIf="onDevice() === false" class="size-full h-20 bg-(--accent) flex flex-col">
-                <div class="size-full flex items-center justify-center">
-                    <h1 class="text-center m-0">Not yet implemented</h1>
-                </div>
-                <div class="size-full items-center justify-center">
-                    <h1 class="text-center m-0">Setting does not have any effect</h1>
-                </div>
+                <input type="text" class="w-full h-full text-center text-4xl font-black tracking-[1em]" [(ngModel)]="onlinePin" placeholder="Game ID">
             </div>
             <div *ngIf="onDevice() === true" class="size-full h-20"></div>
         </div>
 
-        <button (click)="startGame()" class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+        <button *ngIf="onDevice()" (click)="startGame()" class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
         buttonbackgroundeffect
         before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
         after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw
         ">
             Start Game
         </button>
+        
+        <div *ngIf="!onDevice()"class="w-full flex flex-row items-center justify-between gap-5">
+            <button (click)="joinGame()" class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            buttonbackgroundeffect
+            before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
+            after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw
+            ">
+                Join Game
+            </button>
+            <button (click)="createGame()" class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            buttonbackgroundeffect
+            before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
+            after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw
+            ">
+                Create Game
+            </button>
+        </div>
     </div>
 </div>

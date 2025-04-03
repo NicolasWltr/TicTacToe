@@ -44,10 +44,9 @@ export class GameComponent implements AfterViewInit{
     this.game.nativeElement.style.maxWidth = size + "px";
     this.game.nativeElement.style.maxHeight = size + "px";
 
-    console.log(size);
     if (size < 400) this.menuHandler.setMaxDepth(1);
     if (size >= 400) this.menuHandler.setMaxDepth(2);
-    if (size >= 1000) this.menuHandler.setMaxDepth(3);
+    if (size >= 800) this.menuHandler.setMaxDepth(3);
   }
 
   @HostListener('window:resize', ['$event'])

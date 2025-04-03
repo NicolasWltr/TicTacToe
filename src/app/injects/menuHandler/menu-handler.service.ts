@@ -42,6 +42,8 @@ export class MenuHandlerService {
     if (state === "game") {
       this.gameHandler.setDepth(this.depth());
       this.gameHandler.setOnDevice(this.onDevice());
+      this.gameHandler.setCurrentPlayer('X');
+      this.gameHandler.setPlayerTurn('X');
       this.gameHandler.reloadGame();
     }
     this.menuState.set(state);

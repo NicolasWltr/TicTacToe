@@ -35,6 +35,7 @@ export class GameHandlerService {
     this.gameState.set(this.generateGameState(this.depth));
     this.currentPlayedField = [];
     this.currentPlayer = 'X';
+    this.playerTurn = 'X';
   }
 
   public setDepth(depth: number) {
@@ -186,6 +187,7 @@ export class GameHandlerService {
   // Set currentPlayedField value for all fields to value parameter
   // => No highlighted field and no click possible
   private setAllFields(field: QueryList<FieldComponent>, value: boolean): void {
+    if (value) this.currentPlayedField = [];
     field.forEach((child: FieldComponent) => {
       child.setCurrentPlayedField(value);
       this.setAllFields(child.getFields(), value);

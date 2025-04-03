@@ -18,7 +18,7 @@ export class OnlineHandlerService {
   constructor(private gameHandler: GameHandlerService) {
     this.gameHandler.setOnlineHandler(this);
 
-    this.socket = isDevMode() ? io('http://localhost:3000') : io('https://games.walternicolas.de/tictactoe/api');
+    this.socket = isDevMode() ? io('http://localhost:3000/tictactoe/api') : io('https://games.walternicolas.de/tictactoe/api');
     
     this.socket.on('connected', (data: { clientId: string }) => {
       this.clientId = data.clientId;
@@ -93,7 +93,7 @@ export class OnlineHandlerService {
   private resolveGameState(gameState: { state: any, isX: string, turn: string, played: number[] }) {
     this.gameHandler.setGameState(gameState.state);
     this.gameHandler.setCurrentPlayedField(gameState.played);
-    this.gameHandler.setCurrentPlayer(gameState.isX === this.clientId ? "O" : "X");
+    this.gameHandler.setCurrentPlayer(gameState.isX === this.clientId ? "X" : "O");
     this.gameHandler.setPlayerTurn(gameState.turn);
     this.gameHandler.setOnDevice(false);
   }

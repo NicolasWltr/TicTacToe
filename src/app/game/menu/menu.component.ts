@@ -14,12 +14,13 @@ import { OnlineHandlerService } from '../../injects/onlineHandler/online-handler
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
-  maxDepth: number = 3;
+  maxDepth: WritableSignal<1 | 2 | 3>;
   depth: 1 | 2 | 3 = 1;
   onDevice: WritableSignal<boolean> = signal(true);
   onlinePin: string = "";
 
   constructor(private menuHandler: MenuHandlerService, private onlineHandler: OnlineHandlerService) {
+    this.maxDepth = this.menuHandler.getMaxDepth();
   }
 
   setOnDevice(onDevice: boolean) {
@@ -27,19 +28,28 @@ export class MenuComponent {
   }
 
   startGame() {
+    if (this.depth > this.maxDepth()) {
+      this.depth = this.maxDepth();
+    }
     this.menuHandler.setDepth(this.depth);
     this.menuHandler.setOnDevice(this.onDevice());
     this.menuHandler.setMenuState("game");
   }
-
+  
   joinGame() {
+    if (this.depth > this.maxDepth()) {
+      this.depth = this.maxDepth();
+    }
     this.menuHandler.setDepth(this.depth);
     this.menuHandler.setOnDevice(this.onDevice());
-  
+    
     this.onlineHandler.joinGame(this.onlinePin);
   }
-
+  
   createGame() {
+    if (this.depth > this.maxDepth()) {
+      this.depth = this.maxDepth();
+    }
     this.menuHandler.setDepth(this.depth);
     this.menuHandler.setOnDevice(this.onDevice());
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, WritableSignal } from '@angular/core';
 import { FieldComponent } from "./field/field.component";
 import { GameHandlerService } from '../injects/gameHandler/game-handler.service';
 import { MenuComponent } from './menu/menu.component';
@@ -18,17 +18,41 @@ import { CommonModule } from '@angular/common';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent {
+export class GameComponent implements AfterViewInit{
   //Root Field
   @ViewChild('field') field!: FieldComponent;
+  @ViewChild('game') game!: ElementRef;
+  @ViewChild('size') size!: ElementRef;
 
   //GameState to be passed to field
   gameState: WritableSignal<any>;
 
-
   constructor(private gameHandler: GameHandlerService, public menuHandler: MenuHandlerService) {
     //Get the gameState
     this.gameState = this.gameHandler.getGameState();
+  }
+
+  ngAfterViewInit(): void {
+      this.resizeGame();
+  }
+
+  resizeGame() {
+    let width = this.size.nativeElement.offsetWidth;
+    let height = this.size.nativeElement.offsetHeight;
+    let size = Math.min(width, height);
+
+    this.game.nativeElement.style.maxWidth = size + "px";
+    this.game.nativeElement.style.maxHeight = size + "px";
+
+    console.log(size);
+    if (size < 400) this.menuHandler.setMaxDepth(1);
+    if (size >= 400) this.menuHandler.setMaxDepth(2);
+    if (size >= 1000) this.menuHandler.setMaxDepth(3);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.resizeGame();
   }
 
   setMenu(state: "menu" | "game" | "winner") {

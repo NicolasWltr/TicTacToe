@@ -8,6 +8,7 @@ import { OnlineHandlerService } from '../onlineHandler/online-handler.service';
 export class MenuHandlerService {
   private onDevice: WritableSignal<boolean> = signal(true);
   private depth: WritableSignal<1 | 2 | 3> = signal(2);
+  private maxDepth: WritableSignal<1 | 2 | 3> = signal(3);
   private onlinePin: WritableSignal<string> = signal("");
 
   private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("menu");
@@ -29,6 +30,13 @@ export class MenuHandlerService {
   }
   public getDepth(): WritableSignal<1 | 2 | 3> {
     return this.depth;
+  }
+
+  public setMaxDepth(depth: 1 | 2 | 3) {
+    this.maxDepth.set(depth);
+  }
+  public getMaxDepth(): WritableSignal<1 | 2 | 3> {
+    return this.maxDepth;
   }
 
   public setOnlinePin(pin: string) {

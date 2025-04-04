@@ -18,7 +18,7 @@ export class GameHandlerService {
   private playerTurn: string = 'X';
 
   private currentPlayer: string = 'X';
-  private winner: 'X' | 'O' | '/' | null = null;
+  private winner: WritableSignal<'X' | 'O' | '/' | null> = signal(null);
   
   private sleep = (ms: number): Promise<void> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -98,6 +98,10 @@ export class GameHandlerService {
   }
   public getCurrentPlayer(): string {
     return this.currentPlayer;
+  }
+
+  public getWinner(): WritableSignal<'X' | 'O' | '/' | null> {
+    return this.winner;
   }
 
   // Generate a multidimensional array with given depth and empty values
@@ -226,8 +230,8 @@ export class GameHandlerService {
 
     // Check if the whole game is won or drawn
     if (!Array.isArray(this.gameState())) {
-      if (this.gameState() === '/') this.winner = '/';
-      else this.winner = this.gameState();
+      if (this.gameState() === '/') this.winner.set('/');
+      else this.winner.set(this.gameState());
       this.menuHandler!.setMenuState("winner");
     }
   }

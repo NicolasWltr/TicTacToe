@@ -11,7 +11,7 @@ export class MenuHandlerService {
   private maxDepth: WritableSignal<1 | 2 | 3> = signal(3);
   private onlinePin: WritableSignal<string> = signal("");
 
-  private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("menu");
+  private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("winner");
 
   constructor(private gameHandler: GameHandlerService, private onlineHandler: OnlineHandlerService) { 
     this.gameHandler.setMenuHandler(this);

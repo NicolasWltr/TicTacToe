@@ -5,7 +5,7 @@
         <div class="w-full flex flex-col items-center gap-3"
         [ngClass]="{ 'hidden': maxDepth() === 1}">
             <h1 class="text(--primary) text-lg font-black self-start">Depth</h1>
-            <input type="range" min="1" [attr.max]="maxDepth()" value="1" class="w-full h-1 bg-(--highlight) opacity-50 appearance-none rounded-md [&>*]:opacity-100 cursor-pointer" id="myRange" [(ngModel)]="depth">
+            <input type="range" min="1" [attr.max]="maxDepth()" class="w-full h-1 bg-(--highlight) opacity-50 appearance-none rounded-md [&>*]:opacity-100 cursor-pointer" id="myRange" [(ngModel)]="depth">
             <div class="flex flex-row justify-between items-center w-full [&>*]:text-sm md:[&>*]:font-bold [&>*]:text-(--secondary)">
                 <p *ngFor="let _ of [].constructor(maxDepth()); let i = index">{{ i + 1}}</p>
             </div>

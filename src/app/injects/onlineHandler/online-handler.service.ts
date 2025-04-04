@@ -38,8 +38,9 @@ export class OnlineHandlerService {
     });
     
     this.socket.on('update', (data: { gameState: { state: any, isX: string, turn: string, played: number[] } }) => {
-      this.resolveGameState(data.gameState);
       this.isX = data.gameState.isX;
+      this.resolveGameState(data.gameState);
+      this.menuHandler?.setMenuStateOnly("game");
     });
   }
 
@@ -71,6 +72,19 @@ export class OnlineHandlerService {
   }
 
   public updateGame() {
+    this.socket.emit('updateGameState', {
+      "gameId": this.gameId,
+      "gameState": {
+        "state": this.gameHandler.getGameState()(),
+        "isX": this.isX,
+        "turn": this.gameHandler.getPlayerTurn(),
+        "played": this.gameHandler.getCurrentPlayedField()
+      }
+    })
+  }
+  
+  public restartGame() {
+    this.isX = this.clientId;
     this.socket.emit('updateGameState', {
       "gameId": this.gameId,
       "gameState": {

@@ -31,3 +31,16 @@ $light-highlight: #9000ff;
 body {
     background-color: var(--background);
 }
+
+.text-shadow {
+    text-shadow: 5px 5px 2px var(--highlight);
+}
+
+@media (hover: hover) {
+    .hovereffect:hover, .buttonbackgroundeffect:hover::before {
+        border-color: hsl(from var(--highlight) h 50 l);
+    }
+    .buttonbackgroundeffect:hover::before, .buttonbackgroundeffect:hover::after {
+        background-color: hsl(from var(--highlight) h 50 l);
+    }
+}

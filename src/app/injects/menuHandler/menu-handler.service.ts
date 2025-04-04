@@ -53,6 +53,8 @@ export class MenuHandlerService {
       this.gameHandler.setCurrentPlayer('X');
       this.gameHandler.setPlayerTurn('X');
       this.gameHandler.reloadGame();
+    } else if (state === "menu" && !this.onDevice()) {
+      this.onlineHandler.leaveGame();
     }
     this.menuState.set(state);
   }

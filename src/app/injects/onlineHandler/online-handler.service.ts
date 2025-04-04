@@ -83,7 +83,7 @@ export class OnlineHandlerService {
   }
 
   public leaveGame() {
-
+    this.socket.emit('leaveGame', {});
   }
 
   public getClientId(): string {

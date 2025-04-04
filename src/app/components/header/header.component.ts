@@ -31,7 +31,7 @@ export class HeaderComponent {
     this.showOnlinePin.set(!this.showOnlinePin());
   }
 
-  setMenu(state: "menu" | "game" | "winner") {
+  setMenu(state: "menu" | "game" | "winner") { 
     this.menuHandler.setMenuState(state);
   }
 }

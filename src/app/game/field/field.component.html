@@ -19,16 +19,16 @@
     </div>
 </ng-template>
 <ng-template #elseBlock>
-    <div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full place-items-center"
+    <div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full place-items-center overflow-hidden"
     [ngClass]="{ 
         'p-0': indexHistory.length === 0,
         'p-5 sm:p-4 md:p-7 xl:p-9': indexHistory.length === 1,
         'p-3 lg:p-3': indexHistory.length === 2,
         'p-2 lg:p-2': indexHistory.length === 3,
+        'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()()
     }">
         <div *ngFor="let single of gameState; let i = index"
-        class="size-full flex justify-center items-center field-border overflow-hidden"
-        [ngClass]="{ 'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()() }">
+        class="size-full flex justify-center items-center field-border overflow-hidden">
             <ng-container *ngIf="isArray(single); then thenBlock; else elseBlock"></ng-container>
             <ng-template #thenBlock><app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field></ng-template>
             <!-- <ng-template #elseBlock><button (click)="setValue(i)" class="size-full overflow-hidden"><p class="text-size font-black">{{ single }}</p></button></ng-template> -->

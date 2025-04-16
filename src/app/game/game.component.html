@@ -1,7 +1,7 @@
 <div #size class="size-full grid place-items-center">
 
     <div #game class="h-full p-5 lg:p-10 aspect-square my-auto" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'game'}">
-        <div class="size-full bg-(--accent) rounded-4xl">
+        <div class="size-full bg-(--accent) rounded-4xl overflow-hidden">
             <app-field #field class="size-full" [gameState]="gameState()" [root]="true"></app-field> 
         </div>
     </div>

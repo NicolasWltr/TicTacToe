@@ -35,7 +35,7 @@
         </div>
 
         @if (onDevice()) {
-            <button class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            <button (click)="startGame()" class="relative text-(--secondary) text-lg  w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
             buttonbackgroundeffect
             before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
             after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw
@@ -62,6 +62,5 @@
                 </button>
             </div>
         }
-        
     </div>
 </div>

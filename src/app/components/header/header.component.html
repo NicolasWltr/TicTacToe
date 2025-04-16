@@ -4,15 +4,24 @@
             Menu
         </button>
 
-        <div *ngIf="!isOnDevice() && menuState() === 'game'" (click)="toggleShow()" class="cursor-pointer mx-auto text-center">
-            <h1 *ngIf="myTurn()">Your Turn</h1>
-            <h1 *ngIf="!myTurn()">Oponents Turn</h1>
-        </div>
+        @if (!isOnDevice() && menuState() === 'game') {
+            <div (click)="toggleShow()" class="cursor-pointer mx-auto text-center">
+                @if (myTurn()) {
+                    <h1 >Your Turn</h1>
+                } @else if (!myTurn()) {
+                    <h1>Oponents Turn</h1>
+                }
+            </div>
+        }
 
-
-        <div *ngIf="!isOnDevice() && menuState() === 'game'" (click)="toggleShow()" class="cursor-pointer text-right">
-            <h1 *ngIf="!showOnlinePin()" type="password">{{ placeHolder() }}</h1>
-            <h1 *ngIf="showOnlinePin()" type="password">{{ onlinePin() }}</h1>
-        </div>
+        @if (!isOnDevice() && menuState() === 'game') {
+            <div (click)="toggleShow()" class="cursor-pointer text-right">
+                @if (!showOnlinePin()) {
+                    <h1 type="password">{{ placeHolder() }}</h1>
+                } @else if (showOnlinePin()) {
+                    <h1 type="password">{{ onlinePin() }}</h1>
+                }
+            </div>
+        }
     </div>
 </div>

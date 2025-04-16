@@ -1,39 +1,50 @@
 <div class="flex flex-col justify-center size-full">
     <div class="w-full text-center py-20 text-(--primary) text-4xl md:text-7xl xl:text-8xl 2xl:text-9xl font-black text-shadow justify-self-start overflow-hidden mb-20">
-        <h1 *ngIf="winner() === null">End of Game</h1>
-        <h1 *ngIf="winner() === 'X'" class="-rotate-10">{{ winner() }} has won</h1>
-        <h1 *ngIf="winner() === 'O'" class="rotate-10">{{ winner() }} has won</h1>
-        <h1 *ngIf="winner() === '/'">It's a tie</h1>
+        @if (winner() === 'X') {
+            <h1 class="-rotate-10">{{ winner() }} has won</h1>
+        } @else if (winner() === 'O') {
+            <h1 class="rotate-10">{{ winner() }} has won</h1>
+        } @else if (winner() === '/') {
+            <h1>It's a tie</h1>
+        } @else {
+            <h1>End of Game</h1>
+        }
     </div>
 
-    <div *ngIf="!newGameSelected()" class="flex flex-col xl:flex-row w-[80%] mx-auto justify-center items-center gap-10">
-        <button (click)="newGame()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
-        buttonbackgroundeffect
-        before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
-        after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
-            New Game
-        </button>
-        <button (click)="goToMenu()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
-        buttonbackgroundeffect
-        before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
-        after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
-            Menu
-        </button>
-    </div>
-    <div *ngIf="newGameSelected()" class="flex flex-col xl:flex-row w-[80%] mx-auto justify-center items-center gap-10">
-        <div class="w-full flex flex-col items-center gap-3"
-        [ngClass]="{ 'hidden': maxDepth() === 1}">
-            <h1 class="text-(--primary) text-lg font-black self-start">Depth</h1>
-            <input type="range" min="1" [attr.max]="maxDepth()" class="w-full h-1 bg-(--highlight) opacity-50 appearance-none rounded-md [&>*]:opacity-100 cursor-pointer" id="myRange" [(ngModel)]="depth">
-            <div class="flex flex-row justify-between items-center w-full [&>*]:text-sm md:[&>*]:font-bold [&>*]:text-(--secondary)">
-                <p *ngFor="let _ of [].constructor(maxDepth()); let i = index">{{ i + 1}}</p>
-            </div>
+    @if (!newGameSelected()) {
+        <div class="flex flex-col xl:flex-row w-[80%] mx-auto justify-center items-center gap-10">
+            <button (click)="newGame()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            buttonbackgroundeffect
+            before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
+            after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
+                New Game
+            </button>
+            <button (click)="goToMenu()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            buttonbackgroundeffect
+            before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
+            after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
+                Menu
+            </button>
         </div>
-        <button (click)="createNewGame()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
-        buttonbackgroundeffect
-        before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
-        after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
-            Start New Game
-        </button>
-    </div>
+    } @else {
+        <div class="flex flex-col xl:flex-row w-[80%] mx-auto justify-center items-center gap-10">
+            <div class="w-full flex flex-col items-center gap-3"
+            [ngClass]="{ 'hidden': maxDepth() === 1}">
+                <h1 class="text-(--primary) text-lg font-black self-start">Depth</h1>
+                <input type="range" min="1" [attr.max]="maxDepth()" class="w-full h-1 bg-(--highlight) opacity-50 appearance-none rounded-md [&>*]:opacity-100 cursor-pointer" id="myRange" [(ngModel)]="depth">
+                <div class="flex flex-row justify-between items-center w-full [&>*]:text-sm md:[&>*]:font-bold [&>*]:text-(--secondary)">
+                    @for (_ of [].constructor(maxDepth()); track $index) {
+                        <p>{{ $index + 1}}</p>
+                    }
+                </div>
+            </div>
+            <button (click)="createNewGame()" class="relative text-(--secondary) text-md sm:text-lg text-center w-full font-black bg-transparent border-5 border-(--accent) hover:border-(--highlight) rounded-lg px-5 sm:px-20 py-5 mt-10 overflow-hidden transition-all cursor-pointer
+            buttonbackgroundeffect
+            before:content-[' '] before:absolute before:top-0 before:left-0 before:w-0 before:-z-1 before:aspect-square before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:transition-all before:duration-500 hover:before:w-dvw 
+            after:content-[' '] after:absolute after:bottom-0 after:right-0 after:w-0 after:-z-1 after:aspect-square after:translate-x-[50%] after:translate-y-[50%] after:rounded-full after:transition-all after:duration-500 hover:after:w-dvw">
+                Start New Game
+            </button>
+        </div>
+    
+    }
 </div>

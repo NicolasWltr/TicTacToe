@@ -1,6 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { Observable } from 'rxjs';
 import { GameHandlerService } from '../gameHandler/game-handler.service';
 import { MenuHandlerService } from '../menuHandler/menu-handler.service';
 
@@ -56,7 +55,7 @@ export class OnlineHandlerService {
 
     this.isX = this.clientId;
 
-    this.socket.emit('joinGame', { 
+    this.socket.emit('joinGame', {
       "gameState": {
         "state": this.gameHandler.getGameState()(),
         "isX": this.isX,
@@ -68,7 +67,7 @@ export class OnlineHandlerService {
   }
 
   public joinGame(gameId: string) {
-    this.socket.emit('joinGame', { 
+    this.socket.emit('joinGame', {
       "gameId": gameId
     });
   }

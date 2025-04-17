@@ -1,4 +1,5 @@
 @if (!isArray(gameState)) {
+
     <div class="size-full overflow-hidden text-(--text)">
         @if (gameState === 'X') {
             <div class="size-full overflow-hidden grid place-items-center">
@@ -20,7 +21,9 @@
             </div>
         }
     </div>
+
 } @else {
+
     <div class="grid grid-cols-[1fr_1fr_1fr] grid-rows-[1fr_1fr_1fr] h-full w-full place-items-center overflow-hidden"
     [ngClass]="{ 
         'p-0': indexHistory.length === 0,
@@ -30,12 +33,16 @@
         'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()() &&!root
     }">
         <div *ngFor="let single of gameState; let i = index" class="size-full flex justify-center items-center field-border overflow-hidden">
+
             @if (isArray(single)) {
+
                 <app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field>
+
             } @else {
+
                 <button (click)="setValue(i)" class="size-full overflow-hidden text-(--primary) cursor-pointer"
                 [ngClass]="{
-                    'text-(--reverse-highlight)': lastMoveEqual(i)()
+                    'text-(--reverse-highlight)': afterInit() && lastMoveEqual(i)()
                 }">
                     @if (single === 'X') {
                         <div class="size-full overflow-hidden grid place-items-center">
@@ -57,8 +64,10 @@
                         </div>
                     }
                 </button>
+
             }
+
         </div>
-        
     </div>
+
 }

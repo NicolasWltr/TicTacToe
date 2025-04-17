@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, Input, QueryList, signal, ViewChildren, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameHandlerService } from '../../injects/gameHandler/game-handler.service';
-import { last } from 'rxjs';
 
 @Component({
   selector: 'app-field',
@@ -22,13 +21,12 @@ export class FieldComponent implements AfterViewInit{
   @Input() index: number = -1;
   @Input() root: boolean = false;
   
+  public afterInit = signal(false);
   public lastMove: WritableSignal<number[]> = signal([0, 1]);
 
   @ViewChildren(FieldComponent) private fields!: QueryList<FieldComponent>;
 
-  constructor(private gameHandler: GameHandlerService) {
-
-  }
+  constructor(private gameHandler: GameHandlerService) { }
 
   ngAfterViewInit(): void {
     if (this.root) {
@@ -38,12 +36,14 @@ export class FieldComponent implements AfterViewInit{
     this.isClickAble.set(this.fields.length === 0);
     this.myTurn = this.gameHandler.getMyTurn();
 
-    this.lastMove = this.gameHandler.getLastMove();    
+    this.lastMove = this.gameHandler.getLastMove();
     
     // Set the currentPlayedField to true if gameHandler currentPlayedField and indexHistory are equal or gameHandler currentPlayedField is empty (which means player can click any field)
     let currentPlayed = this.gameHandler.getCurrentPlayedField();
     if (currentPlayed.length === 0) this.currentPlayedField.set(true);
     else this.currentPlayedField.set(this.gameHandler.arraysEqual(this.indexHistory, currentPlayed));
+
+    this.afterInit.set(true);
   }
 
   public getCurrentPlayedField() {
@@ -67,6 +67,7 @@ export class FieldComponent implements AfterViewInit{
   }
 
   public lastMoveEqual(current: number): WritableSignal<boolean> {
+    console.log(signal(this.gameHandler.lastMoveEqual([...this.indexHistory, current], this.lastMove()))(), [...this.indexHistory, current])
     return signal(this.gameHandler.lastMoveEqual([...this.indexHistory, current], this.lastMove()));
   }
 

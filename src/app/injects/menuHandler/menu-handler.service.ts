@@ -13,7 +13,7 @@ export class MenuHandlerService {
 
   private menuState: WritableSignal<"menu" | "game" | "winner"> = signal("menu");
 
-  constructor(private gameHandler: GameHandlerService, private onlineHandler: OnlineHandlerService) { 
+  constructor(private gameHandler: GameHandlerService, private onlineHandler: OnlineHandlerService) {
     this.gameHandler.setMenuHandler(this);
     this.onlineHandler.setMenuHandler(this);
   }

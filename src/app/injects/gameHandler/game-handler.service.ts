@@ -12,9 +12,9 @@ export class GameHandlerService {
   private rootField: FieldComponent | null = null;
   private onDevice: boolean = true;
   private gameVisible: WritableSignal<boolean> = signal(false);
-  
+
   private currentPlayedField: number[] = [];
-  
+
   private myTurn: WritableSignal<boolean> = signal(true);
   private playerTurn: string = 'X';
 
@@ -30,10 +30,10 @@ export class GameHandlerService {
   private menuHandler: MenuHandlerService | undefined = undefined;
   private onlineHandler: OnlineHandlerService | undefined = undefined;
 
-  constructor() { 
+  constructor() {
     this.gameState.set(this.generateGameState(this.depth));
   }
-  
+
   public reloadGame() {
     this.gameState.set(this.generateGameState(this.depth));
     this.currentPlayedField = [];
@@ -124,7 +124,6 @@ export class GameHandlerService {
   public setLastMove(last: number[]) {
     this.lastMove.set(last);
   }
-
   public getLastMove(): WritableSignal<number[]> {
     return this.lastMove;
   }
@@ -140,7 +139,7 @@ export class GameHandlerService {
   // Method which gets called from the fields when clicked
   public async setValue(index: number[]) {
     // Do not change if index array to change points to a filled field
-    if (this.hasValue(index)) return
+    if (this.hasValue(index)) return;
 
     this.lastMove.set(index);
 
@@ -161,10 +160,10 @@ export class GameHandlerService {
     this.setAllFields(this.rootField!.getFields(), false);
     // Update the current played field to [-1] so that the clicked field which is rerendered can get the currentplayed field when constructed
     this.currentPlayedField = [-1];
-    
+
     // Check if there is any win or draw position in the gameState and change the gameState accordingly
     await this.checkWin();
-    
+
     // Set the current played field to the nextField value so that new constructed fields can get the current played field when constructed
     this.currentPlayedField = nextField;
     // Set the current played field to true so that is can be clicked and is highlighted
@@ -187,20 +186,20 @@ export class GameHandlerService {
     if (indices.length === 0) {
       return newValue;
     }
-  
+
     const [currentIndex, ...remainingIndices] = indices;
-  
+
     if (!Array.isArray(array) || currentIndex >= array.length) {
       throw new Error("Invalid indices or array structure");
     }
-  
+
     const updatedArray = [...array];
     updatedArray[currentIndex] = this.updateNestedArray(
       updatedArray[currentIndex],
       remainingIndices,
       newValue
     );
-  
+
     return updatedArray;
   }
 
@@ -327,10 +326,10 @@ export class GameHandlerService {
         break;
       }
     }
-    
+
     // If draw return changed and draw value
     if (isDraw) return [true, '/'];
-    
+
     // No Draw or win return unchanged and null value
     return [false, null];
   }

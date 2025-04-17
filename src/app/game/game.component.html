@@ -2,15 +2,20 @@
 
     <div #game class="h-full p-5 lg:p-10 aspect-square my-auto" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'game'}">
         <div class="size-full bg-(--accent) rounded-4xl overflow-hidden">
+
             @if (isVisible()) {
                 <app-field #field class="size-full" [gameState]="gameState()" [root]="true"></app-field> 
             }
+
         </div>
     </div>
+
     <div class="size-full" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'menu'}">
         <app-menu></app-menu>
     </div>
+
     <div class="size-full" [ngClass]="{ 'hidden': menuHandler.getMenuState()() !== 'winner'}">
         <app-winner-screen></app-winner-screen>
     </div>
+
 </div>

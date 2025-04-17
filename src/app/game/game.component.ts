@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FieldComponent } from "./field/field.component";
 import { GameHandlerService } from '../injects/gameHandler/game-handler.service';
 import { MenuComponent } from './menu/menu.component';
@@ -26,10 +26,12 @@ export class GameComponent implements AfterViewInit{
 
   //GameState to be passed to field
   gameState: WritableSignal<any>;
+  isVisible: WritableSignal<boolean>;
 
   constructor(private gameHandler: GameHandlerService, public menuHandler: MenuHandlerService) {
     //Get the gameState
     this.gameState = this.gameHandler.getGameState();
+    this.isVisible = this.gameHandler.getGameVisible();
   }
 
   ngAfterViewInit(): void {

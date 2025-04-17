@@ -1,5 +1,5 @@
 @if (!isArray(gameState)) {
-    <div  class="size-full overflow-hidden text-(--primary)">
+    <div class="size-full overflow-hidden text-(--text)">
         @if (gameState === 'X') {
             <div class="size-full overflow-hidden grid place-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
@@ -27,14 +27,17 @@
         'p-5 sm:p-4 md:p-7 xl:p-9': indexHistory.length === 1,
         'p-3 lg:p-3': indexHistory.length === 2,
         'p-2 lg:p-2': indexHistory.length === 3,
-        'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()()
+        'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()() &&!root
     }">
         @for (single of gameState; track $index) {
             <div class="size-full flex justify-center items-center field-border overflow-hidden">
                 @if (isArray(single)) {
                     <app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory($index, indexHistory)" [index]="$index"></app-field>
                 } @else {
-                    <button (click)="setValue($index)" class="size-full overflow-hidden text-(--primary) cursor-pointer">
+                    <button (click)="setValue($index)" class="size-full overflow-hidden text-(--primary) cursor-pointer"
+                    [ngClass]="{
+                        'text-(--reverse-highlight)': lastMoveEqual($index)()
+                    }">
                         @if (single === 'X') {
                             <div class="size-full overflow-hidden grid place-items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">

@@ -11,6 +11,7 @@ export class GameHandlerService {
   private gameState: WritableSignal<any> = signal(undefined);
   private rootField: FieldComponent | null = null;
   private onDevice: boolean = true;
+  private gameVisible: WritableSignal<boolean> = signal(false);
   
   private currentPlayedField: number[] = [];
   
@@ -19,6 +20,8 @@ export class GameHandlerService {
 
   private currentPlayer: string = 'X';
   private winner: WritableSignal<'X' | 'O' | '/' | null> = signal(null);
+
+  private lastMove: WritableSignal<number[]> = signal([]);
   
   private sleep = (ms: number): Promise<void> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -36,6 +39,12 @@ export class GameHandlerService {
     this.currentPlayedField = [];
     this.currentPlayer = 'X';
     this.playerTurn = 'X';
+    this.lastMove.set([]);
+
+    this.gameVisible.set(false);
+    setTimeout(() => {
+      this.gameVisible.set(true);
+    }, 1);
   }
 
   public setDepth(depth: number) {
@@ -44,6 +53,14 @@ export class GameHandlerService {
 
   public setOnDevice(onDevice: boolean) {
     this.onDevice = onDevice;
+  }
+
+  public setGameVisible(visible: boolean) {
+    this.gameVisible.set(visible);
+  }
+
+  public getGameVisible(): WritableSignal<boolean> {
+    return this.gameVisible;
   }
 
   public async setGameState(gameState: any) {
@@ -104,6 +121,10 @@ export class GameHandlerService {
     return this.winner;
   }
 
+  public getLastMove(): WritableSignal<number[]> {
+    return this.lastMove;
+  }
+
   // Generate a multidimensional array with given depth and empty values
   private generateGameState(depth: number): any[] | string {
     if (depth === 0) {
@@ -117,6 +138,9 @@ export class GameHandlerService {
     // Do not change if index array to change points to a filled field
     if (this.hasValue(index)) return
 
+    this.lastMove.set(index);
+
+    console.log("move at index: ", index, "with value: ", this.currentPlayer);
     // Sets the value of clicked field to the value of the current player
     this.changeGameState(index, this.currentPlayer);
 
@@ -313,6 +337,19 @@ export class GameHandlerService {
     for (let i = 0; i < arr1.length; i++) {
       if (arr1[i] !== arr2[i]) return false;
     }
+    return true;
+  }
+
+  public lastMoveEqual(arr1: number[], arr2: number[]): boolean {
+    let i = 0;
+
+    while (i < arr1.length && i < arr2.length) {
+      if (arr1[i] !== arr2[i]) {
+        return false;
+      }
+      i++;
+    }
+
     return true;
   }
 }

@@ -18,6 +18,7 @@ $light-highlight: #9000ff;
     --accent: #{$dark-accent};
     --background: #{$dark-backround};
     --highlight: #{$dark-highlight};
+    --reverse-highlight: #{$light-highlight};
 }
 
 .light {
@@ -26,6 +27,7 @@ $light-highlight: #9000ff;
     --accent: #{$light-accent};
     --background: #{$light-backround};
     --highlight: #{$light-highlight};
+    --reverse-highlight: #{$dark-highlight};
 }
 
 body {

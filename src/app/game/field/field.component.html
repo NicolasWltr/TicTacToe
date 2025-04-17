@@ -29,37 +29,36 @@
         'p-2 lg:p-2': indexHistory.length === 3,
         'bg-(--highlight)': getCurrentPlayedField()() && getIsClickAble()() && getMyTurn()() &&!root
     }">
-        @for (single of gameState; track $index) {
-            <div class="size-full flex justify-center items-center field-border overflow-hidden">
-                @if (isArray(single)) {
-                    <app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory($index, indexHistory)" [index]="$index"></app-field>
-                } @else {
-                    <button (click)="setValue($index)" class="size-full overflow-hidden text-(--primary) cursor-pointer"
-                    [ngClass]="{
-                        'text-(--reverse-highlight)': lastMoveEqual($index)()
-                    }">
-                        @if (single === 'X') {
-                            <div class="size-full overflow-hidden grid place-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
-                                    <path d="M20,20 L80,80 M80,20 L20,80" stroke="currentColor" stroke-width="10" fill="none"/>
-                                </svg>
-                            </div>
-                        } @else if (single === 'O') {
-                            <div class="size-full overflow-hidden grid place-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
-                                    <path d="M50,10 A40,40 0 1,1 49.9,10 Z" stroke="currentColor" stroke-width="10" fill="none"/>
-                                </svg>
-                            </div>
-                        } @else if (single === '/') {
-                            <div class="size-full overflow-hidden grid place-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
-                                    <path d="M20,50 L80,50" stroke="currentColor" stroke-width="10" fill="none"/>
-                                </svg>
-                            </div>
-                        }
-                    </button>
-                }
-            </div>
-        }
+        <div *ngFor="let single of gameState; let i = index" class="size-full flex justify-center items-center field-border overflow-hidden">
+            @if (isArray(single)) {
+                <app-field class="h-full aspect-square" [gameState]="single" [indexHistory]="setIndexHistory(i, indexHistory)" [index]="i"></app-field>
+            } @else {
+                <button (click)="setValue(i)" class="size-full overflow-hidden text-(--primary) cursor-pointer"
+                [ngClass]="{
+                    'text-(--reverse-highlight)': lastMoveEqual(i)()
+                }">
+                    @if (single === 'X') {
+                        <div class="size-full overflow-hidden grid place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                                <path d="M20,20 L80,80 M80,20 L20,80" stroke="currentColor" stroke-width="10" fill="none"/>
+                            </svg>
+                        </div>
+                    } @else if (single === 'O') {
+                        <div class="size-full overflow-hidden grid place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                                <path d="M50,10 A40,40 0 1,1 49.9,10 Z" stroke="currentColor" stroke-width="10" fill="none"/>
+                            </svg>
+                        </div>
+                    } @else if (single === '/') {
+                        <div class="size-full overflow-hidden grid place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-full" viewBox="0 0 100 100">
+                                <path d="M20,50 L80,50" stroke="currentColor" stroke-width="10" fill="none"/>
+                            </svg>
+                        </div>
+                    }
+                </button>
+            }
+        </div>
+        
     </div>
 }

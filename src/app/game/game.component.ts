@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, signal, ViewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, WritableSignal } from '@angular/core';
 import { FieldComponent } from "./field/field.component";
 import { GameHandlerService } from '../injects/gameHandler/game-handler.service';
 import { MenuComponent } from './menu/menu.component';

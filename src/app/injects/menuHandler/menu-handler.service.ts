@@ -47,6 +47,7 @@ export class MenuHandlerService {
   }
 
   public setMenuState(state: "menu" | "game" | "winner") {
+    if (state !== "game") this.gameHandler.setGameVisible(false);
     if (state === "game") {
       this.gameHandler.setDepth(this.depth());
       this.gameHandler.setOnDevice(this.onDevice());
@@ -60,6 +61,7 @@ export class MenuHandlerService {
   }
 
   public setMenuStateOnly(state: "menu" | "game" | "winner") {
+    if (state !== "game") this.gameHandler.setGameVisible(false);
     this.menuState.set(state);
   }
 

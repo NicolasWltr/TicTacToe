@@ -35,6 +35,7 @@ export class OnlineHandlerService {
       this.resolveGameState(data.gameState);
       this.menuHandler?.setMenuStateOnly("game");
       this.isX = data.gameState.isX;
+      this.gameHandler.setGameVisible(true);
     });
     
     this.socket.on('update', (data: { gameState: { state: any, isX: string, turn: string, played: number[], lastMove: number[] }}) => {

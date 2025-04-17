@@ -11,7 +11,7 @@ export class GameHandlerService {
   private gameState: WritableSignal<any> = signal(undefined);
   private rootField: FieldComponent | null = null;
   private onDevice: boolean = true;
-  private gameVisible: WritableSignal<boolean> = signal(true);
+  private gameVisible: WritableSignal<boolean> = signal(false);
   
   private currentPlayedField: number[] = [];
   
@@ -55,9 +55,9 @@ export class GameHandlerService {
     this.onDevice = onDevice;
   }
 
-  // public setGameVisible(visible: boolean) {
-  //   // this.gameVisible.set(visible);
-  // }
+  public setGameVisible(visible: boolean) {
+    this.gameVisible.set(visible);
+  }
 
   public getGameVisible(): WritableSignal<boolean> {
     return this.gameVisible;

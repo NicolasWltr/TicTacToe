@@ -29,7 +29,7 @@ export class OnlineHandlerService {
       alert(data.message);
     });
 
-    this.socket.on('initUpdate', (data: { gameId: string, gameState: { state: any, isX: string, turn: string, played: number[]}} ) => {
+    this.socket.on('initUpdate', (data: { gameId: string, gameState: { state: any, isX: string, turn: string, played: number[], lastMove: number[] }}) => {
       this.gameId = data.gameId;
       this.menuHandler?.setOnlinePin(this.gameId);
       this.resolveGameState(data.gameState);
@@ -37,7 +37,7 @@ export class OnlineHandlerService {
       this.isX = data.gameState.isX;
     });
     
-    this.socket.on('update', (data: { gameState: { state: any, isX: string, turn: string, played: number[] } }) => {
+    this.socket.on('update', (data: { gameState: { state: any, isX: string, turn: string, played: number[], lastMove: number[] }}) => {
       this.isX = data.gameState.isX;
       this.resolveGameState(data.gameState);
       this.menuHandler?.setMenuStateOnly("game");
@@ -60,7 +60,8 @@ export class OnlineHandlerService {
         "state": this.gameHandler.getGameState()(),
         "isX": this.isX,
         "turn": this.gameHandler.getPlayerTurn(),
-        "played": this.gameHandler.getCurrentPlayedField()
+        "played": this.gameHandler.getCurrentPlayedField(),
+        "lastMove": this.gameHandler.getLastMove()()
       }
     });
   }
@@ -78,7 +79,8 @@ export class OnlineHandlerService {
         "state": this.gameHandler.getGameState()(),
         "isX": this.isX,
         "turn": this.gameHandler.getPlayerTurn(),
-        "played": this.gameHandler.getCurrentPlayedField()
+        "played": this.gameHandler.getCurrentPlayedField(),
+        "lastMove": this.gameHandler.getLastMove()()
       }
     })
   }
@@ -91,7 +93,8 @@ export class OnlineHandlerService {
         "state": this.gameHandler.getGameState()(),
         "isX": this.isX,
         "turn": this.gameHandler.getPlayerTurn(),
-        "played": this.gameHandler.getCurrentPlayedField()
+        "played": this.gameHandler.getCurrentPlayedField(),
+        "lastMove": this.gameHandler.getLastMove()()
       }
     })
   }
@@ -104,11 +107,12 @@ export class OnlineHandlerService {
     return this.clientId;
   }
 
-  private resolveGameState(gameState: { state: any, isX: string, turn: string, played: number[] }) {
+  private resolveGameState(gameState: { state: any, isX: string, turn: string, played: number[], lastMove: number[] }) {
     this.gameHandler.setGameState(gameState.state);
     this.gameHandler.setCurrentPlayedField(gameState.played);
     this.gameHandler.setCurrentPlayer(gameState.isX === this.clientId ? "X" : "O");
     this.gameHandler.setPlayerTurn(gameState.turn);
     this.gameHandler.setOnDevice(false);
+    this.gameHandler.setLastMove(gameState.lastMove);
   }
 }
